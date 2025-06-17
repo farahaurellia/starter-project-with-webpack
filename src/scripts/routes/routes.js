@@ -11,17 +11,22 @@ const routes = {
   '/login': new LoginView(),
   '/register': new RegisterView(),
   '/add-story': new AddStoryView(),
-  // '/stories': new DetailStoryView(),
 };
 
 const initializePage = async (route) => {
   const mainContent = document.getElementById('main-content');
 
   if (route === '/login') {
-    const loginView = new LoginView();
-    loginView.render();
     const model = new Model();
-    new Presenter(loginView, model);
+    const loginView = new LoginView();
+    const presenter = new Presenter(loginView, model);
+    console.log('Presenter sudah diinisialisasi (routes)');
+    loginView.setPresenter(presenter);
+    console.log('LoginView render dipanggil (routes)');
+    console.log('LoginView appContainer:', loginView.appContainer);
+    loginView.render();
+    console.log('LoginView render selesai (routes)');
+    console.log('Sebelum clear:', mainContent.childNodes);
     mainContent.innerHTML = '';
     mainContent.appendChild(loginView.appContainer);
     await loginView.afterRender?.();

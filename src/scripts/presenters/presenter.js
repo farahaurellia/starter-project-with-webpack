@@ -1,29 +1,41 @@
+import Model from '../../models/model.js';
+
 class Presenter {
   constructor(view, model) {
     this.view = view;
     this.model = model;
+
+    console.log('Presenter constructor dipanggil');
+    if (!this.model) {
+      console.error('Model tidak diinisialisasi di Presenter');
+    }
+
     if (this.view && typeof this.view.setPresenter === 'function') {
-      this.view.setPresenter(this);
+      this.view.setPresenter(this);  // Pastikan presenter diset ke view
+    }else {
+      console.error('Presenter gagal diset ke view');
     }
   }
 
   handleLogin(email, password) {
+    console.log('handleLogin dipanggil dengan email:', email);  // Log untuk memverifikasi pemanggilan
     this.model
-      .login(email, password)
-      .then((data) => {
+      .login(email, password)  // Panggil model untuk login
+      .then(data => {
         if (data.error) {
           this.view.displayError(data.message);
         } else {
           if (data.loginResult && data.loginResult.token) {
-            localStorage.setItem('token', data.loginResult.token);
+            localStorage.setItem('token', data.loginResult.token); // Simpan token di localStorage
           }
           setTimeout(() => {
-            this.view.redirectToHomePage();
+            this.view.redirectToHomePage();  // Redirect setelah login sukses
           }, 100);
         }
       })
-      .catch((error) => {
-        this.view.displayError(error.message);
+      .catch(error => {
+        console.error('Error saat login:', error);
+        this.view.displayError(error.message || 'Login gagal. Silakan coba lagi.');
       });
   }
 

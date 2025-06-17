@@ -253,7 +253,7 @@ header {
 .auth-btn:hover {
   color: #fff;
   font-weight: bold;
-  background: none; /* hilangkan background saat hover */
+  background: linear-gradient(10deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%); /* hilangkan background saat hover */
   text-decoration: none;
 }
 

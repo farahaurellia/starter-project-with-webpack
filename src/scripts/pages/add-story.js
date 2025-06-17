@@ -191,6 +191,7 @@ class AddStoryView {
     this.presenter = presenter;
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
+      console.log('Form submitted, handling add story...');
       const description = this.descriptionInput.value;
       const photo = this.photoInput.files[0];
       const lat = this.latInput.value ? parseFloat(this.latInput.value) : undefined;

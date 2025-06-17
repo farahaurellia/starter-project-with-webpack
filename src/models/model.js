@@ -20,20 +20,26 @@ class Model {
   }
 
   // Fungsi untuk melakukan Login
-  login(email, password) {
-    return fetch(`${this.apiUrl}login`, {
+    login(email, password) {
+    return fetch(`${this.apiUrl}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password })
     })
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((error) => {
-        throw new Error(error);
-      });
+    .then(response => response.json())
+    .then(data => {
+      console.log('Login data:', data); // Log data untuk debug
+      return data;
+    })
+    .catch(error => {
+      console.error('Error during login:', error); // Log error untuk debug
+      throw new Error('Login failed');
+    });
   }
+
+
 
   // Fungsi untuk mengambil semua stories
   getAllStories({ page = 1, size = 10, location = 0, token }) {
@@ -56,6 +62,7 @@ class Model {
     const formData = new FormData();
     formData.append('description', description);
     formData.append('photo', photo);
+    console.log('Adding story with data');
     if (lat !== undefined) formData.append('lat', lat);
     if (lon !== undefined) formData.append('lon', lon);
 
