@@ -37,8 +37,13 @@ class App {
     const page = routes[url];
 
     this.#content.innerHTML = '';
-    this.#content.appendChild(await page.render());
-    await page.afterRender();
+    if (page && typeof page.render === 'function') {
+      this.#content.appendChild(await page.render());
+      await page.afterRender();
+    } else {
+      // Tampilkan error atau redirect ke halaman 404
+      console.error('Route not found or render() is not a function:', url);
+    }
   }
 }
 

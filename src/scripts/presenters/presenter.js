@@ -1,5 +1,3 @@
-import NotificationPopupView from '../pages/notificationView';
-
 class Presenter {
   constructor(view, model) {
     this.view = view;
@@ -50,8 +48,6 @@ class Presenter {
   }
 
   handleAddStory({ description, photo, lat, lon, token }) {
-    // Ambil token dari parameter (dari view), bisa undefined/null jika guest
-    // Guest user boleh menambah story tanpa login
     if (!description || !photo) {
       this.view.displayError('Deskripsi dan foto wajib diisi.');
       return;
@@ -71,7 +67,6 @@ class Presenter {
       });
   }
 
-  // Presenter untuk detail story
   handleGetDetailStory({ id }) {
     const token = localStorage.getItem('token');
     if (!token) {

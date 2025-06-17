@@ -42,11 +42,14 @@ class DetailStoryView {
         setTimeout(() => {
           const mapDiv = document.getElementById('map-detail');
           if (mapDiv) {
-            const map = L.map(mapDiv).setView([story.lat, story.lon], 13);
+            if (window.myMap) {
+              window.myMap.remove();
+            }
+            window.myMap = L.map(mapDiv).setView([story.lat, story.lon], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
               attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-            L.marker([story.lat, story.lon]).addTo(map);    
+            }).addTo(window.myMap);
+            L.marker([story.lat, story.lon]).addTo(window.myMap);    
           }
         }, 0);
       }
@@ -56,5 +59,8 @@ class DetailStoryView {
     return this.appContainer;
   }
 }
+
+const hash = window.location.hash.slice(1);
+const id = hash.split('/')[2]; // /stories/:id
 
 export default DetailStoryView;

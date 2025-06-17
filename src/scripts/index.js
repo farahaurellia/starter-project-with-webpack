@@ -2,16 +2,9 @@
 import '../styles/styles.css';
 import App from './pages/app';
 import Model from '../models/model';
-import { NotificationView } from './pages/notificationView';
 import Presenter from './presenters/presenter';
-import { NotificationPresenter } from './presenters/notificationPresenter.js';
-
-const VAPID_PUBLIC_KEY = 'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r21CnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const notifView = new NotificationView();
-  const notifPresenter = new NotificationPresenter(notifView);
-  await notifPresenter.init();
 
   const app = new App({
     content: document.querySelector('#main-content'),

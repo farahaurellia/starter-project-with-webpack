@@ -3,7 +3,6 @@ import LoginView from '../pages/loginView';
 import RegisterView from '../pages/registerView';
 import AddStoryView from '../pages/add-story';
 import DetailStoryView from '../pages/detail-story';
-// Tidak perlu import NotificationPopupView di sini
 import Presenter from '../presenters/presenter';
 import Model from '../../models/model';
 
@@ -12,8 +11,7 @@ const routes = {
   '/login': new LoginView(),
   '/register': new RegisterView(),
   '/add-story': new AddStoryView(),
-  '/stories': new DetailStoryView(),
-  // Hapus '/notification'
+  // '/stories': new DetailStoryView(),
 };
 
 const initializePage = async (route) => {
@@ -47,10 +45,13 @@ const initializePage = async (route) => {
     const id = route.split('/')[2];
     const detailStoryView = new DetailStoryView();
     const model = new Model();
+    console.log('Before clear:', mainContent.childNodes);
     mainContent.innerHTML = '';
+    console.log('After clear:', mainContent.childNodes);
     const token = localStorage.getItem('token');
-    await detailStoryView.render({ id, model, token });
-    mainContent.appendChild(detailStoryView.appContainer);
+    const detailEl = await detailStoryView.render({ id, model, token });
+    mainContent.appendChild(detailEl);
+    console.log('After append:', mainContent.childNodes);
   } else if (route === '/') {
     routes['/'].render();
     mainContent.innerHTML = '';
@@ -60,11 +61,16 @@ const initializePage = async (route) => {
 };
 
 const handleRoute = () => {
+  console.log('handleRoute called', window.location.hash);
   const hash = window.location.hash.slice(1) || '/';
   initializePage(hash);
 };
 
-window.addEventListener('hashchange', handleRoute);
+window.removeEventListener('hashchange', handleRoute);
+if (!window._hasRouteListener) {
+  window.addEventListener('hashchange', handleRoute);
+  window._hasRouteListener = true;
+}
 handleRoute();
 
 export default routes;
