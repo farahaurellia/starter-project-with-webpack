@@ -4,6 +4,7 @@ export default class HomePage {
   constructor() {
     this.appContainer = document.createElement('div');
     this.authModel = new Model();
+    this.storiesData = null; // Menyimpan data stories
   }
 
   async render() {
@@ -18,30 +19,31 @@ export default class HomePage {
 
     const storiesList = this.appContainer.querySelector('#stories-list');
     const token = localStorage.getItem('token');
+    
     if (!token) {
       storiesList.innerHTML = '<p>Anda belum login.</p>';
-      return;
+      return this.appContainer; // Pastikan selalu return Node
     }
 
     try {
-      const data = await this.authModel.getAllStories({
+      this.storiesData = await this.authModel.getAllStories({
         page: 1,
         size: 10,
         location: 0,
         token,
       });
 
-      if (data.error) {
-        storiesList.innerHTML = `<p>${data.message || 'Gagal memuat stories.'}</p>`;
-        return;
+      if (this.storiesData.error) {
+        storiesList.innerHTML = `<p>${this.storiesData.message || 'Gagal memuat stories.'}</p>`;
+        return this.appContainer;
       }
 
-      if (!data.listStory || data.listStory.length === 0) {
+      if (!this.storiesData.listStory || this.storiesData.listStory.length === 0) {
         storiesList.innerHTML = '<p>Tidak ada stories.</p>';
-        return;
+        return this.appContainer;
       }
 
-      const storiesHtml = data.listStory.map((story, idx) => `
+      const storiesHtml = this.storiesData.listStory.map((story, idx) => `
         <article class="story-card" tabindex="0" data-story-id="${story.id}" aria-label="Story oleh ${story.name}">
           <figure>
             <img src="${story.photoUrl}" 
@@ -58,43 +60,48 @@ export default class HomePage {
           }
         </article>
       `).join('');
+      
       storiesList.innerHTML = storiesHtml;
 
-      data.listStory.forEach((story, idx) => {
-        const storyDiv = storiesList.querySelector(`[data-story-id="${story.id}"]`);
-        if (storyDiv) {
-          storyDiv.addEventListener('click', () => {
-            window.location.hash = `/stories/${story.id}`;
-          });
-          storyDiv.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              window.location.hash = `/stories/${story.id}`;
-            }
-          });
-        }
-        if (story.lat && story.lon) {
-          const mapId = `map-${idx}`;
-          // Pastikan map container sudah ada di DOM
-          setTimeout(() => {
-            const mapDiv = document.getElementById(mapId);
-            if (mapDiv && !mapDiv._leaflet_id) { // Cegah double init
-              const map = L.map(mapId).setView([story.lat, story.lon], 13);
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-              }).addTo(map);
-              L.marker([story.lat, story.lon]).addTo(map);
-            }
-          }, 0);
-        }
-      });
     } catch (err) {
       storiesList.innerHTML = `<p>Terjadi kesalahan saat memuat stories.<br>${err.message || ''}</p>`;
     }
 
-    return this.appContainer; 
+    return this.appContainer; // Pastikan selalu return Node
   }
 
   async afterRender() {
-    // 
+    if (!this.storiesData?.listStory) return;
+
+    // Add event listeners
+    const storyCards = this.appContainer.querySelectorAll('[data-story-id]');
+    storyCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const storyId = card.dataset.storyId;
+        window.location.hash = `/stories/${storyId}`;
+      });
+      
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const storyId = card.dataset.storyId;
+          window.location.hash = `/stories/${storyId}`;
+        }
+      });
+    });
+
+    // Initialize maps
+    this.storiesData.listStory.forEach((story, idx) => {
+      if (story.lat && story.lon) {
+        const mapId = `map-${idx}`;
+        const mapDiv = document.getElementById(mapId);
+        if (mapDiv && !mapDiv._leaflet_id) {
+          const map = L.map(mapId).setView([story.lat, story.lon], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+          L.marker([story.lat, story.lon]).addTo(map);
+        }
+      }
+    });
   }
 }
