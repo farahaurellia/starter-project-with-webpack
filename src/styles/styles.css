@@ -1,0 +1,622 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f8e9f8; /* ubah background utama jadi ungu muda */
+}
+
+.container {
+  padding-inline: 32px;
+  margin-inline: auto;
+  max-width: 1300px;
+}
+
+header {
+  background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+}
+
+.main-header {
+  min-height: 90px;
+  padding-block: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-right: auto;
+}
+
+.sidebar-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: #2d1b2e;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 0 0 0;
+  min-height: 100vh;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+}
+
+.sidebar .brand-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 32px 32px;
+  letter-spacing: 2px;
+}
+
+.navigation-drawer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  width: 100%;
+  padding: 0 32px;
+  background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+
+  position: static;
+  box-shadow: none;
+  transform: none;
+
+  z-index: 9999;
+}
+
+.navigation-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-button {
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+
+  display: inline-block;
+  background-color: transparent;
+
+  font-weight: bold;
+  font-size: 28px;
+  color: #141e16;
+
+  cursor: pointer;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  gap: 10px 20px;
+  margin-left: auto;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-list li {
+  margin-bottom: 0;
+}
+
+.nav-list a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: block;
+  transition: color 0.2s, font-weight 0.2s;
+  background: none; /* pastikan tidak ada background */
+  font-weight: normal;
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+  color: #fff;
+  font-weight: bold;
+  background: none; /* hilangkan background saat hover */
+  text-decoration: none;
+}
+
+/* MAIN */
+.main-content {
+  padding-block: 20px;
+  flex: 1;
+  padding: 40px;
+  background: #f8e9f8;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.story-card {
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 16px;
+  margin-bottom: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.story-card:focus {
+  outline: 2px solid #0078d7;
+  box-shadow: 0 4px 16px rgba(0,120,215,0.15);
+}
+.story-card figure {
+  width: 100%;
+  margin: 0;
+}
+.story-card img {
+  width: 100%;
+  max-width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.story-card figcaption {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+}
+.story-card p {
+  font-size: 0.95rem;
+  text-align: center;
+  min-height: 40px;
+}
+.story-card small {
+  color: #888;
+}
+.story-map {
+  height: 120px;
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.auth-container {
+  max-width: 350px;
+  margin: 48px auto 0 auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(160, 44, 180, 0.08);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-title {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  color: #a23cf0;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1b3e0;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.auth-input:focus {
+  border: 1.5px solid #a23cf0;
+}
+
+.auth-btn {
+  padding: 10px 0;
+  background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+}
+
+.auth-btn:hover {
+  color: #fff;
+  font-weight: bold;
+  background: none; /* hilangkan background saat hover */
+  text-decoration: none;
+}
+
+.auth-error {
+  color: #e74c3c;
+  font-size: 0.98rem;
+  margin: 0;
+  min-height: 20px;
+}
+
+.auth-logout-btn {
+  margin-top: 18px;
+  background: #fff;
+  color: #a23cf0;
+  border: 1px solid #a23cf0;
+  border-radius: 8px;
+  padding: 8px 0;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+}
+
+.auth-logout-btn:hover {
+  color: #fff;
+  font-weight: bold;
+  background: none; /* hilangkan background saat hover */
+  text-decoration: none;
+}
+
+/* Write your styles more here */
+
+.notification-popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.notification-popup-content {
+  background: #f8e9f8 !important; /* ubah card dan popup jadi ungu muda */
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(160,44,180,0.13);
+  padding: 32px 28px 24px 28px;
+  min-width: 300px;
+  max-width: 90vw;
+  text-align: center;
+}
+.notif-btn {
+  margin-top: 18px;
+  background: #a23cf0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+}
+.notif-btn:hover {
+  color: #fff;
+  font-weight: bold;
+  background: none; /* hilangkan background saat hover */
+  text-decoration: none;
+}
+.notif-bell-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notif-bell-btn:hover,
+.notif-bell-btn.active {
+  background: #a23cf0;
+}
+.notif-bell-btn svg {
+  display: block;
+}
+
+/* Detail Story Styles */
+.detail-story {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(160, 44, 180, 0.08);
+  padding: 32px 28px 28px 28px;
+  max-width: 420px;
+  margin: 40px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-story h2 {
+  font-size: 1.6rem;
+  color: #a23cf0;
+  margin-bottom: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.detail-story img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(160,44,180,0.07);
+}
+
+.detail-story p {
+  font-size: 1.08rem;
+  margin-bottom: 12px;
+  color: #333;
+  text-align: center;
+}
+
+.detail-story small {
+  color: #888;
+  font-size: 0.97rem;
+  margin-bottom: 8px;
+  display: block;
+  text-align: center;
+}
+
+.detail-story #map-detail {
+  margin-top: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  height: 250px;
+  box-shadow: 0 2px 8px rgba(160,44,180,0.07);
+}
+
+.detail-story .auth-btn {
+  align-self: flex-start;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 18px;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+  /* Tambahkan agar background tidak hilang saat hover */
+}
+
+.detail-story .auth-btn:hover {
+  color: #fff;
+  font-weight: bold;
+  background: linear-gradient(10deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+  text-decoration: none;
+}
+
+/* Add Story Styles */
+.add-story-container {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(160, 44, 180, 0.08);
+  padding: 32px 28px 28px 28px;
+  max-width: 480px;
+  margin: 40px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-story-container h1 {
+  font-size: 1.5rem;
+  color: #a23cf0;
+  margin-bottom: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#addStoryForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+#addStoryForm label {
+  font-weight: bold;
+  color: black;
+  margin-bottom: 4px;
+}
+
+#addStoryForm textarea,
+#addStoryForm input[type="number"] {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d1b3e0;
+  padding: 8px 10px;
+  font-size: 1rem;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  resize: vertical;
+  transition: border 0.2s;
+}
+
+#addStoryForm textarea:focus,
+#addStoryForm input[type="number"]:focus {
+  border: 1.5px solid #a23cf0;
+  outline: none;
+}
+
+#addStoryForm button[type="button"] {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 8px 16px;
+  background: #a23cf0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+}
+
+#addStoryForm button[type="button"]:hover {
+  color: #fff;
+  font-weight: bold;
+  background: #dd2a7b;
+}
+
+#addStoryForm button[type="submit"] {
+  margin-top: 12px;
+  padding: 10px 0;
+  background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s, font-weight 0.2s, background 0.2s;
+}
+
+#addStoryForm button[type="submit"]:hover {
+  color: #fff;
+  font-weight: bold;
+  background: linear-gradient(10deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+}
+
+#previewContainer img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+#cameraContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cameraContainer video {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+#cameraContainer canvas {
+  display: none;
+}
+
+#map-picker {
+  height: 250px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(160,44,180,0.07);
+}
+
+#addStoryForm p#errorMessage {
+  color: #e74c3c;
+  font-size: 0.98rem;
+  min-height: 20px;
+  margin: 0;
+}
+
+#addStoryForm p#successMessage {
+  color: #27ae60;
+  font-size: 0.98rem;
+  min-height: 20px;
+  margin: 0;
+}
+
+/* Tambahkan di bawah media query di styles.css */
+/* filepath: c:\Users\Dell.RIKCY\Downloads\starter-project-with-webpack\starter-project-with-webpack\src\styles\styles.css */
+
+/* Hamburger menu styles */
+.drawer-button {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .navigation-drawer {
+    flex-direction: row;
+    padding: 10px 10px;
+    position: relative;
+  }
+  .drawer-button {
+    display: block;
+    margin-right: 12px;
+    margin-left: 0;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1001;
+    order: 0;
+  }
+  .brand-name {
+    margin-right: 0;
+    order: 1;
+  }
+  .nav-list {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: auto;
+    background: linear-gradient(90deg, #f58529 0%, #dd2a7b 50%, #515bd4 100%);
+    flex-direction: column;
+    align-items: flex-start;
+    width: 200px;
+    padding: 16px 0;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    display: none;
+    z-index: 1000;
+    transition: left 0.2s;
+  }
+  .nav-list.open {
+    display: flex !important;
+  }
+  .nav-list li {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .nav-list a, .nav-list button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 0;
+    background: none;
+    border: none;
+    color: #fff;
+  }
+}

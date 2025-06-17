@@ -1,0 +1,70 @@
+import HomePage from '../pages/home/home-page';
+import LoginView from '../pages/loginView';
+import RegisterView from '../pages/registerView';
+import AddStoryView from '../pages/add-story';
+import DetailStoryView from '../pages/detail-story';
+// Tidak perlu import NotificationPopupView di sini
+import Presenter from '../presenters/presenter';
+import Model from '../../models/model';
+
+const routes = {
+  '/': new HomePage(),
+  '/login': new LoginView(),
+  '/register': new RegisterView(),
+  '/add-story': new AddStoryView(),
+  '/stories': new DetailStoryView(),
+  // Hapus '/notification'
+};
+
+const initializePage = async (route) => {
+  const mainContent = document.getElementById('main-content');
+
+  if (route === '/login') {
+    const loginView = new LoginView();
+    loginView.render();
+    const model = new Model();
+    new Presenter(loginView, model);
+    mainContent.innerHTML = '';
+    mainContent.appendChild(loginView.appContainer);
+    await loginView.afterRender?.();
+  } else if (route === '/register') {
+    const registerView = new RegisterView();
+    registerView.render();
+    const model = new Model();
+    new Presenter(registerView, model);
+    mainContent.innerHTML = '';
+    mainContent.appendChild(registerView.appContainer);
+    await registerView.afterRender?.();
+  } else if (route === '/add-story') {
+    const addStoryView = new AddStoryView();
+    addStoryView.render();
+    const model = new Model();
+    new Presenter(addStoryView, model);
+    mainContent.innerHTML = '';
+    mainContent.appendChild(addStoryView.appContainer);
+    await addStoryView.afterRender?.();
+  } else if (route.startsWith('/stories')) {
+    const id = route.split('/')[2];
+    const detailStoryView = new DetailStoryView();
+    const model = new Model();
+    mainContent.innerHTML = '';
+    const token = localStorage.getItem('token');
+    await detailStoryView.render({ id, model, token });
+    mainContent.appendChild(detailStoryView.appContainer);
+  } else if (route === '/') {
+    routes['/'].render();
+    mainContent.innerHTML = '';
+    mainContent.appendChild(routes['/'].appContainer);
+    await routes['/'].afterRender?.();
+  }
+};
+
+const handleRoute = () => {
+  const hash = window.location.hash.slice(1) || '/';
+  initializePage(hash);
+};
+
+window.addEventListener('hashchange', handleRoute);
+handleRoute();
+
+export default routes;

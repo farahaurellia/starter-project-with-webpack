@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.png">
+
+    <title>App</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav id="navigation-drawer" class="navigation-drawer floating-navbar">
+        <button id="drawer-button" class="drawer-button" aria-label="Buka menu">&#9776;</button>
+        <div class="brand-name">Instigrim</div>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="#/">Beranda</a></li>
+          <li><a href="#/add-story">Add</a></li>
+          <li><a href="#/login">Login</a></li>
+          <li><a href="#/register">Register</a></li>
+          <li>
+            <button id="notif-bell-btn" class="notif-bell-btn" title="Aktifkan/Nonaktifkan Notifikasi" aria-label="Notifikasi">
+              <svg id="notif-bell-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <!-- Bell ON -->
+                <path id="bell-on" d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.63-5.64-5-6.32V4a1 1 0 1 0-2 0v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29A1 1 0 0 0 6 19h12a1 1 0 0 0 .71-1.71L18 16z" fill="#a23cf0"/>
+                <!-- Bell OFF -->
+                <path id="bell-off" d="M18.364 17.95l1.414-1.414-14.85-14.85-1.414 1.414 2.02 2.02A7.003 7.003 0 0 0 4 11v5l-1.29 1.29A1 1 0 0 0 4 19h16l.29-.29-1.926-1.926zm-6.364 4.05c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-1.306-.417-2.518-1.121-3.5l-8.38-8.38A1 1 0 0 0 7.05 1.05l14.85 14.85a1 1 0 0 0-1.414 1.414l-2.02-2.02A6.978 6.978 0 0 1 18 11v5z" fill="#aaa" style="display:none"/>
+                <circle id="notif-bell-dot" cx="18" cy="6" r="3" fill="#a23cf0" style="display:none"/>
+              </svg>
+            </button>
+          </li>
+          <li>
+              <button id="subscribeButton">Subscribe</button>
+
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main-content" class="main-content"></main>
+    <script type="module" src="app.bundle.js"></script>
+  </body>
+</html>
